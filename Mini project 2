@@ -1,0 +1,46 @@
+class Vehicle:
+    def __init__(self, no): self.no = no
+    def fee(self, h): return 0
+    def details(self): print(type(self).__name__, "-", self.no)
+
+class Car(Vehicle):
+    def fee(self, h): return h * 30
+
+class Bike(Vehicle):
+    def fee(self, h): return h * 15
+
+class Truck(Vehicle):
+    def fee(self, h): return h * 50
+
+parked = {}
+
+while True:
+    print("\n1.Park 2.Remove 3.View 4.Search 5.Fee 6.Exit")
+    ch = input("Choice: ")
+
+    if ch == "1":
+        t = input("Type(Car/Bike/Truck): ").lower()
+        n = input("Vehicle No: ")
+        parked[n] = Car(n) if t == "car" else Bike(n) if t == "bike" else Truck(n)
+        print("Parked Successfully")
+
+    elif ch == "2":
+        print("Removed" if parked.pop(input("Vehicle No: "), None) else "Not Found")
+
+    elif ch == "3":
+        [v.details() for v in parked.values()]
+
+    elif ch == "4":
+        n = input("Vehicle No: ")
+        parked[n].details() if n in parked else print("Not Found")
+
+    elif ch == "5":
+        n = input("Vehicle No: ")
+        if n in parked:
+            h = int(input("Hours: "))
+            print("Parking Fee:", parked[n].fee(h))
+        else:
+            print("Not Found")
+
+    elif ch == "6":
+        break
